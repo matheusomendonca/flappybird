@@ -113,7 +113,4 @@ class FlappyBirdGame:
                 self.screen.blit(text_score, (10, 50))
 
             pygame.display.update()
-            if self.train_mode:
-                self.clock.tick(60)
-            else:
-                self.clock.tick(60)
+            self.clock.tick(60)
