@@ -1,7 +1,9 @@
 # FlappyBird AI
 Implementation of an optimization algorithm (Genetic Algorithm + Neural Nets) to play the Flappy Bird game.
 
-![AI Bird](img/example.gif "Trained AI")
+<p align="center">
+  <img src="img/example.gif"/>
+</p>
 
 ## Code execution
 The code has two main execution scripts:
