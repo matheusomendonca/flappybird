@@ -10,4 +10,4 @@ The code has two main execution scripts:
 * `main.py`: main script to play the game in three distinct modes:
   * `trained_bird`: watch the trained bird play the game (it is fun! :))
   * `manual`: manual input from the keyboard;
-  * `compete`: compete against the trained bird (Human vs AI).
+  * `competition`: compete against the trained bird (Human vs AI).

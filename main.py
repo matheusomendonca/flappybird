@@ -29,4 +29,4 @@ def main(play_type):
 
 
 if __name__=="__main__":
-    main(play_type='trained_bird')
+    main(play_type='competition')
