@@ -1,4 +1,4 @@
-from game.bird import AIBird
+from game.bird import AIBird, ManualBird
 from game.pipe import Pipe
 import pygame
 from constants import Constants
@@ -14,7 +14,6 @@ class FlappyBirdGame:
     screen = pygame.display.set_mode((Constants.SCREEN_WIDTH.value, Constants.SCREEN_HEIGHT.value))
     background_image: Any = field(init=False)
     clock: Any = field(init=False)
-    score: int = field(init=False)
     font: Any = field(init=False)
     best_bird: dict = field(init=False)
 
@@ -30,13 +29,15 @@ class FlappyBirdGame:
         # game parameters
         self.font = pygame.font.Font(None, 36)
         self.clock = pygame.time.Clock()
-        self.score = 0
         self.best_bird_parameters = {'weights1': None,
                                      'weights2': None,
                                      'biases1': None,
                                      'biases2': None}
 
-    def play(self, birds: list[AIBird], generation: int = None) -> None:
+    def play(self,
+             birds: list[AIBird, ManualBird],
+             generation: int = None,
+             best_fitness: float = None) -> bool:
          
         pipes = []
         while True:
@@ -75,9 +76,13 @@ class FlappyBirdGame:
                     # Pass inputs through neural network and make jump decision
                     bird.jump_decision(pipes=pipes)
 
-            # Check collision and update score
+            # Check collision and update fitness and score
             for bird in birds:
+
+                bird.compute_score(pipes=pipes)
+
                 if bird.alive:
+
                     if bird.y > Constants.SCREEN_HEIGHT.value or bird.y < 0:
                         bird.alive = False
                     else:
@@ -87,10 +92,11 @@ class FlappyBirdGame:
                                 if (bird.y - Constants.BIRD_RADIUS.value < pipe.top_height or 
                                 bird.y + Constants.BIRD_RADIUS.value > pipe.bottom_start):
                                     bird.alive = False
-                if bird.alive and not bird.manual_play:
-                    bird.compute_score()
-                    if bird.score > self.score:
-                        self.score = bird.score
+
+                if bird.alive and self.train_mode:
+                    bird.compute_fitness()
+                    if bird.fitness > best_fitness:
+                        best_fitness = bird.fitness
                         self.best_bird_parameters['weights1'] = bird.neural_network.weights1.copy()
                         self.best_bird_parameters['weights2'] = bird.neural_network.weights2.copy()
                         self.best_bird_parameters['biases1'] = bird.neural_network.biases1.copy()
@@ -100,17 +106,32 @@ class FlappyBirdGame:
             birds = [bird for bird in birds if bird.alive]
 
             if len(birds) == 0:
-                break
+                return best_fitness, False
 
-            if self.train_mode and self.score > 100:
-                return True
+            if self.train_mode and best_fitness > 100:
+                return best_fitness, True
           
             if self.train_mode:
                  # Render generation number and maximum score on screen
                 text_generation = self.font.render("Generation: " + str(generation), True, (255, 255, 255))
-                text_score = self.font.render("Max Score: " + str(self.score), True, (255, 255, 255))
+                text_score = self.font.render(f"Best Fitness: {best_fitness:.3f}", True, (255, 255, 255))
                 self.screen.blit(text_generation, (10, 10))
                 self.screen.blit(text_score, (10, 50))
+            else:
+                y_position = 10
+                for bird in birds:
+                    score = bird.score
+                    if isinstance(bird, ManualBird):
+                        text = f"Manual Score: {score}"
+                        print(text)
+                    elif isinstance(bird, AIBird):
+                        text = f"AI Score: {score}"
+                        print(text)
+                    else:
+                        text = f"Score: {score}"
+                    text_score = self.font.render(text, True, (255, 255, 255))
+                    self.screen.blit(text_score, (10, y_position))
+                    y_position += 40
 
             pygame.display.update()
             self.clock.tick(60)

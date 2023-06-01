@@ -10,6 +10,7 @@ class TrainBird:
 
     def __init__(self, game: FlappyBirdGame) -> None:
         self.game = game
+        self.best_fitness = 0
     
     def initialize_population(self) -> list[AIBird]:
 
@@ -52,12 +53,16 @@ class TrainBird:
             current_birds = population.copy()
             
             # Play game
-            trained = self.game.play(birds=current_birds, generation=generation)
+            self.best_fitness, trained = self.game.play(birds=current_birds,
+                                                        generation=generation,
+                                                        best_fitness=self.best_fitness)
             
             # Create new generation if all birds die
-            print("Generation:", generation, "Score:", self.game.score)
-            scores = [bird.score for bird in current_birds]
-            print(f"  avg: {np.mean(scores)}, std: {np.std(scores)/np.mean(scores)}")
+            generation_fitness = [bird.fitness for bird in current_birds]
+            print(f"Generation: {generation},"
+                  f"Max Fitness: {self.best_fitness:.3f},", 
+                  f"Current avg Fitness: {np.mean(generation_fitness):.3f},", 
+                  f"Current relative std: {np.std(generation_fitness)/np.mean(generation_fitness):.3f}")
 
             # Increment generation count
             generation += 1

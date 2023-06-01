@@ -1,9 +1,53 @@
 import numpy as np
-from game.base_bird import BaseBird
 from game.pipe import Pipe
 from constants import Constants
 import pickle
+import pygame
+import abc
+from model.neural_network import NeuralNetwork
 
+
+class BaseBird(metaclass = abc.ABCMeta):
+
+    bird_image = pygame.image.load("img/bird.png")
+
+    def __init__(self,
+                 screen, 
+                 x: int = Constants.SCREEN_WIDTH.value // 2, 
+                 y: int = Constants.SCREEN_HEIGHT.value // 2) -> None:
+        
+        self.x = x
+        self.y = y
+        self.screen = screen
+        
+        self.velocity = 0
+        self.alive = True
+        self.score = 0
+        self.neural_network = NeuralNetwork()
+
+    def jump(self):
+        self.velocity = -Constants.JUMP_VELOCITY.value
+
+    def move(self):
+        self.velocity += Constants.GRAVITY.value
+        self.y += self.velocity
+
+    def draw(self):
+        self.screen.blit(self.image, (self.x - Constants.BIRD_RADIUS.value, int(self.y) - Constants.BIRD_RADIUS.value))
+
+    def change_color(self, color):
+        self.image.fill(color, special_flags=pygame.BLEND_RGB_MULT)
+
+    def compute_score(self, pipes = list[Pipe]):
+
+        for pipe in pipes:
+            if not pipe.overcame and pipe.x + Constants.PIPE_WIDTH.value/2 < self.x:
+                self.score += 1
+                pipe.overcame = True
+
+    @abc.abstractmethod
+    def compute_fitness(self):
+        pass
 
 class AIBird(BaseBird):
 
@@ -17,6 +61,7 @@ class AIBird(BaseBird):
         self.image = self.bird_image.copy()
         self.manual_play = False
         self.neural_network_inputs = None
+        self.fitness = 0
 
     def jump_decision(self, pipes: list[Pipe]):
 
@@ -61,10 +106,10 @@ class AIBird(BaseBird):
                                                 self.y
                                                 ]])
     
-    def compute_score(self) -> None:
+    def compute_fitness(self) -> None:
         
         vertical_distance_score = 1/(self.neural_network_inputs[0][0]+1e4)
-        self.score += 1/Constants.SCREEN_WIDTH.value + vertical_distance_score
+        self.fitness += 1/Constants.SCREEN_WIDTH.value + vertical_distance_score
 
 
 class ManualBird(BaseBird):
@@ -80,6 +125,6 @@ class ManualBird(BaseBird):
         self.manual_play = True
         self.change_color(color=(255, 0, 0))
 
-    def compute_score(self) -> None:
+    def compute_fitness(self) -> None:
         pass
     

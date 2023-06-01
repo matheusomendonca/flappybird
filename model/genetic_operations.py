@@ -11,7 +11,7 @@ def tournament_selection(population):
     for _ in range(int(Constants.ELITISM_RATE.value * Constants.POPULATION_SIZE.value)):
         candidate1 = random.choice(population)
         candidate2 = random.choice(population)
-        if candidate1.score > candidate2.score:
+        if candidate1.fitness > candidate2.fitness:
             parents.append(candidate1)
         else:
             parents.append(candidate2)

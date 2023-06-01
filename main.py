@@ -13,20 +13,23 @@ def main(play_type):
         ai_bird.load_neural_network_weights(filename=filename)
         birds = [ai_bird]
        
-    if play_type == 'manual':
+    elif play_type == 'manual':
 
         bird = ManualBird(screen=game.screen)
         birds = [bird]
 
-    if play_type == 'competition':
+    elif play_type == 'competition':
 
         ai_bird = AIBird(screen=game.screen)
         ai_bird.load_neural_network_weights(filename=filename)
         manual_bird = ManualBird(screen=game.screen)
         birds = [ai_bird, manual_bird]
 
+    else:
+        raise ValueError("Invalid game option!")
+
     game.play(birds)
 
 
 if __name__=="__main__":
-    main(play_type='competition')
+    main(play_type='manual')
