@@ -1,7 +1,7 @@
 from game.bird import AIBird, ManualBird
 from game.pipe import Pipe
 import pygame
-from constants import Constants
+from model.constants import Constants
 import numpy as np
 from typing import Any
 from dataclasses import dataclass, field

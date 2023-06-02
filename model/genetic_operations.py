@@ -1,7 +1,7 @@
 from game.bird import AIBird
 import numpy as np
 import random
-from constants import Constants
+from model.constants import Constants
 from model.neural_network import NeuralNetwork
 
 

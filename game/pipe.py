@@ -1,5 +1,5 @@
 import random
-from constants import Constants
+from model.constants import Constants
 import pygame
 
 

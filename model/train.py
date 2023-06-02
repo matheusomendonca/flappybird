@@ -1,5 +1,5 @@
 from game.bird import AIBird
-from constants import Constants
+from model.constants import Constants
 import numpy as np
 from game.game import FlappyBirdGame
 import random

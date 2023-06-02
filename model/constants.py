@@ -14,8 +14,8 @@ class Constants(Enum):
     PIPE_SPEED = 4
 
     # algorithm constants
-    POPULATION_SIZE = 500
-    GENERATIONS = 100
-    CROSSOVER_RATE = 0.8
+    POPULATION_SIZE = 1000
+    GENERATIONS = 15
+    CROSSOVER_RATE = 0.9
     MUTATION_RATE = 0.05
-    ELITISM_RATE = 0.1
+    ELITISM_RATE = 0.05

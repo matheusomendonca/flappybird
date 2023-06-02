@@ -1,6 +1,6 @@
 import numpy as np
 from game.pipe import Pipe
-from constants import Constants
+from model.constants import Constants
 import pickle
 import pygame
 import abc
