@@ -13,8 +13,7 @@ class Pipe():
         self.screen = screen
         self.top_height = random.randint(int(0.3*Constants.SCREEN_HEIGHT.value), int(0.7*Constants.SCREEN_HEIGHT.value))
         self.bottom_start = self.top_height + Constants.GAP_SIZE.value
-        self.overcame = False
-
+        
     def move(self):
         self.x -= Constants.PIPE_SPEED.value
 

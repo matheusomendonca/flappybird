@@ -41,10 +41,11 @@ class BaseBird(metaclass = abc.ABCMeta):
     def compute_score(self, pipes = list[Pipe]):
 
         for pipe in pipes:
-            if not pipe.overcame and pipe.x + Constants.PIPE_WIDTH.value/2 < self.x:
+            pipe_checkpoint = pipe.x + Constants.PIPE_WIDTH.value/2
+            bird_checkpoint = self.x
+            if pipe_checkpoint > bird_checkpoint and pipe_checkpoint - bird_checkpoint < Constants.PIPE_SPEED.value:
                 self.score += 1
-                pipe.overcame = True
-
+                
     @abc.abstractmethod
     def compute_fitness(self):
         pass

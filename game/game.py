@@ -119,19 +119,17 @@ class FlappyBirdGame:
                 self.screen.blit(text_score, (10, 50))
             else:
                 y_position = 10
+                offset = 40
                 for bird in birds:
-                    score = bird.score
                     if isinstance(bird, ManualBird):
-                        text = f"Manual Score: {score}"
-                        print(text)
+                        text = f"Manual Score: {bird.score}"
                     elif isinstance(bird, AIBird):
-                        text = f"AI Score: {score}"
-                        print(text)
+                        text = f"AI Score: {bird.score}"
                     else:
-                        text = f"Score: {score}"
+                        text = f"Score: {bird.score}"
                     text_score = self.font.render(text, True, (255, 255, 255))
                     self.screen.blit(text_score, (10, y_position))
-                    y_position += 40
+                    y_position += offset
 
             pygame.display.update()
             self.clock.tick(60)

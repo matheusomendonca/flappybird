@@ -33,7 +33,7 @@ class TrainBird:
         # Clean up after each generation
         for bird in population:
             bird.alive = True
-            bird.score = 0
+            bird.fitness = 0
 
         return population 
     

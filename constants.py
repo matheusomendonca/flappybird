@@ -15,7 +15,7 @@ class Constants(Enum):
 
     # algorithm constants
     POPULATION_SIZE = 500
-    GENERATIONS = 20
+    GENERATIONS = 100
     CROSSOVER_RATE = 0.8
     MUTATION_RATE = 0.05
-    ELITISM_RATE = 0.2
+    ELITISM_RATE = 0.1

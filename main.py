@@ -11,7 +11,7 @@ def main(play_type):
 
         ai_bird = AIBird(screen=game.screen)
         ai_bird.load_neural_network_weights(filename=filename)
-        birds = [ai_bird]
+        birds = [ai_bird]  
        
     elif play_type == 'manual':
 
@@ -32,4 +32,4 @@ def main(play_type):
 
 
 if __name__=="__main__":
-    main(play_type='manual')
+    main(play_type='competition')
