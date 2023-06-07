@@ -1,7 +1,9 @@
 """Pipes class."""
 
 import random
+
 import pygame
+
 from model.constants import Constants
 
 

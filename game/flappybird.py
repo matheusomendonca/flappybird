@@ -1,8 +1,10 @@
 """Main script for the flappy bird game."""
 
-from typing import Any
 from dataclasses import dataclass, field
+from typing import Any
+
 import pygame
+
 from game.bird import AIBird, ManualBird
 from game.pipe import Pipe
 from model.constants import Constants

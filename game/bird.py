@@ -1,9 +1,11 @@
 """Birds classes."""
 
-import pickle
 import abc
-import pygame
+import pickle
+
 import numpy as np
+import pygame
+
 from game.pipe import Pipe
 from model.constants import Constants
 from model.neural_network import NeuralNetwork

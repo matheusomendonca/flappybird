@@ -1,7 +1,9 @@
 """Genetic operations for optization."""
 
 import random
+
 import numpy as np
+
 from game.bird import AIBird
 from model.constants import Constants
 from model.neural_network import NeuralNetwork
