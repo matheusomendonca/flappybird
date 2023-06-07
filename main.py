@@ -2,7 +2,7 @@ from game.game import FlappyBirdGame
 from game.bird import AIBird, ManualBird
 
 
-def main(play_type):
+def main(play_type: str):
 
     game = FlappyBirdGame(train_mode=False)
     filename = "trained_bird.pkl"

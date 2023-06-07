@@ -35,7 +35,7 @@ class BaseBird(metaclass = abc.ABCMeta):
     def draw(self):
         self.screen.blit(self.image, (self.x - Constants.BIRD_RADIUS.value, int(self.y) - Constants.BIRD_RADIUS.value))
 
-    def change_color(self, color):
+    def change_color(self, color: tuple):
         self.image.fill(color, special_flags=pygame.BLEND_RGB_MULT)
 
     def compute_score(self, pipes = list[Pipe]):

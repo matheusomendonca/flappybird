@@ -8,7 +8,7 @@ class Pipe():
     pipe_image = pygame.image.load("img/pipe.png")
 
 
-    def __init__(self, x, screen):
+    def __init__(self, x: int, screen):
         self.x = x + Constants.GAP_SIZE.value
         self.screen = screen
         self.top_height = random.randint(int(0.3*Constants.SCREEN_HEIGHT.value), int(0.7*Constants.SCREEN_HEIGHT.value))

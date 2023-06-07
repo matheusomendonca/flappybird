@@ -5,7 +5,7 @@ from model.constants import Constants
 from model.neural_network import NeuralNetwork
 
 
-def tournament_selection(population):
+def tournament_selection(population: list[AIBird]):
     # Perform tournament selection
     parents = []
     for _ in range(int(Constants.ELITISM_RATE.value * Constants.POPULATION_SIZE.value)):
@@ -17,7 +17,7 @@ def tournament_selection(population):
             parents.append(candidate2)
     return parents
 
-def perform_crossover(parent1, parent2):
+def perform_crossover(parent1: AIBird, parent2: AIBird):
     if random.random() < Constants.CROSSOVER_RATE.value:
         # Create empty child network
         child_network = NeuralNetwork()
@@ -57,7 +57,7 @@ def perform_crossover(parent1, parent2):
             return parent2
 
 
-def perform_mutation(bird):
+def perform_mutation(bird: AIBird):
     # Mutate weights in the hidden layer
     for i in range(bird.neural_network.hidden_size):
         for j in range(bird.neural_network.input_size):
