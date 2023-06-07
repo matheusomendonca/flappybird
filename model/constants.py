@@ -1,6 +1,9 @@
-from enum import Enum 
+"""Constants"""
+
+from enum import Enum
 
 class Constants(Enum):
+    """Game and algorithm parameters."""
 
     # game constants
     SCREEN_WIDTH = 800

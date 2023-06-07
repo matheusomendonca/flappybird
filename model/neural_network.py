@@ -1,6 +1,9 @@
+"""Neural network for jump decision."""
+
 import numpy as np
 
 class NeuralNetwork:
+    """Neural network for jump decision."""
     def __init__(self):
         self.input_size = 3
         self.hidden_size = 4
@@ -15,11 +18,13 @@ class NeuralNetwork:
         self.biases2 = np.random.randn(self.output_size)
 
     def predict(self, inputs):
+        """Jump decision in [0, 1]."""
         hidden_layer_output = np.maximum(0, np.dot(inputs, self.weights1) + self.biases1)  # ReLU activation
         output = self.sigmoid(np.dot(hidden_layer_output, self.weights2) + self.biases2)
         return output
 
     @staticmethod
     def sigmoid(x: float):
+        """Sigmoid function."""
         x = np.clip(x, -700, 700)
         return 1 / (1 + np.exp(-x))

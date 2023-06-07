@@ -1,8 +1,11 @@
-from game.game import FlappyBirdGame
+"""Main execution script."""
+
+from game.flappybird import FlappyBirdGame
 from game.bird import AIBird, ManualBird
 
 
 def main(play_type: str):
+    """ Main execution."""
 
     game = FlappyBirdGame(train_mode=False)
     filename = "trained_bird.pkl"
@@ -11,8 +14,8 @@ def main(play_type: str):
 
         ai_bird = AIBird(screen=game.screen)
         ai_bird.load_neural_network_weights(filename=filename)
-        birds = [ai_bird]  
-       
+        birds = [ai_bird]
+
     elif play_type == 'manual':
 
         bird = ManualBird(screen=game.screen)
@@ -31,5 +34,5 @@ def main(play_type: str):
     game.play(birds)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main(play_type='competition')

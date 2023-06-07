@@ -1,7 +1,7 @@
 from game.bird import AIBird
 from model.constants import Constants
 import numpy as np
-from game.game import FlappyBirdGame
+from game.flappybird import FlappyBirdGame
 import random
 from model.genetic_operations import tournament_selection, perform_crossover, perform_mutation
 import pickle
