@@ -24,7 +24,7 @@ class NeuralNetwork:
         return output
 
     @staticmethod
-    def sigmoid(x: float):
+    def sigmoid(x_value: float):
         """Sigmoid function."""
-        x = np.clip(x, -700, 700)
-        return 1 / (1 + np.exp(-x))
+        x_value = np.clip(x_value, -700, 700)
+        return 1 / (1 + np.exp(-x_value))

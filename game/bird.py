@@ -17,11 +17,11 @@ class BaseBird(metaclass=abc.ABCMeta):
 
     def __init__(self,
                  screen,
-                 x: int = Constants.SCREEN_WIDTH.value // 2,
-                 y: int = Constants.SCREEN_HEIGHT.value // 2) -> None:
+                 x_coordinate: int = Constants.SCREEN_WIDTH.value // 2,
+                 y_coordinate: int = Constants.SCREEN_HEIGHT.value // 2) -> None:
 
-        self.x = x
-        self.y = y
+        self.x_coordinate = x_coordinate
+        self.y_coordinate = y_coordinate
         self.screen = screen
         self.image = self.bird_image.copy()
 
@@ -37,12 +37,12 @@ class BaseBird(metaclass=abc.ABCMeta):
     def move(self):
         """Move method."""
         self.velocity += Constants.GRAVITY.value
-        self.y += self.velocity
+        self.y_coordinate += self.velocity
 
     def draw(self):
         """Draw bird on screen method."""
-        self.screen.blit(self.image, (self.x - Constants.BIRD_RADIUS.value,
-                         int(self.y) - Constants.BIRD_RADIUS.value))
+        self.screen.blit(self.image, (self.x_coordinate - Constants.BIRD_RADIUS.value,
+                         int(self.y_coordinate) - Constants.BIRD_RADIUS.value))
 
     def change_color(self, color: tuple):
         """Change bird color."""
@@ -52,8 +52,8 @@ class BaseBird(metaclass=abc.ABCMeta):
         """Compute bird score: number of overcame pipes."""
 
         for pipe in pipes:
-            pipe_checkpoint = pipe.x + Constants.PIPE_WIDTH.value/2
-            bird_checkpoint = self.x
+            pipe_checkpoint = pipe.x_coordinate + Constants.PIPE_WIDTH.value/2
+            bird_checkpoint = self.x_coordinate
             if pipe_checkpoint > bird_checkpoint and pipe_checkpoint - bird_checkpoint < Constants.PIPE_SPEED.value:
                 self.score += 1
 
@@ -67,11 +67,11 @@ class AIBird(BaseBird):
 
     def __init__(self,
                  screen,
-                 x: int = Constants.SCREEN_WIDTH.value // 2,
-                 y: int = Constants.SCREEN_HEIGHT.value // 2):
+                 x_coordinate: int = Constants.SCREEN_WIDTH.value // 2,
+                 y_coordinate: int = Constants.SCREEN_HEIGHT.value // 2):
         super().__init__(screen=screen,
-                         x=x,
-                         y=y)
+                         x_coordinate=x_coordinate,
+                         y_coordinate=y_coordinate)
         self.manual_play = False
         self.neural_network_inputs = None
         self.fitness = 0
@@ -105,23 +105,23 @@ class AIBird(BaseBird):
         """Bird sensors on environment."""
 
         # find closest upcoming pipe
-        distance_to_pipes = np.array([pipe.x - self.x for pipe in pipes])
+        distance_to_pipes = np.array([pipe.x_coordinate - self.x_coordinate for pipe in pipes])
         distance_to_pipes[distance_to_pipes < 0] = 1e6
         index_closest_pipe = np.argmin(distance_to_pipes)
         closest_pipe = pipes[index_closest_pipe]
 
         # distance to midpoint (y-axis)
         distance_to_mid_point_closest = (
-            closest_pipe.bottom_start + closest_pipe.top_height)/2 - self.y
+            closest_pipe.bottom_start + closest_pipe.top_height)/2 - self.y_coordinate
 
         # horizontal distance to next pipe
-        horizontal_distance = closest_pipe.x + Constants.PIPE_WIDTH.value/2 - self.x
+        horizontal_distance = closest_pipe.x_coordinate + Constants.PIPE_WIDTH.value/2 - self.x_coordinate
 
         # Prepare inputs for neural network
         self.neural_network_inputs = np.array([[
             distance_to_mid_point_closest,
             horizontal_distance,
-            self.y
+            self.y_coordinate
         ]])
 
     def compute_fitness(self) -> None:
@@ -136,11 +136,11 @@ class ManualBird(BaseBird):
 
     def __init__(self,
                  screen,
-                 x: int = Constants.SCREEN_WIDTH.value // 2,
-                 y: int = Constants.SCREEN_HEIGHT.value // 2):
+                 x_coordinate: int = Constants.SCREEN_WIDTH.value // 2,
+                 y_coordinate: int = Constants.SCREEN_HEIGHT.value // 2):
         super().__init__(screen=screen,
-                         x=x,
-                         y=y)
+                         x_coordinate=x_coordinate,
+                         y_coordinate=y_coordinate)
         self.manual_play = True
         self.change_color(color=(255, 0, 0))
 

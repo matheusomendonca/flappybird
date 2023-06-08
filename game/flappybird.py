@@ -65,9 +65,9 @@ class FlappyBirdGame:
                              )  # Draw the background
 
             # Create and move pipes
-            if len(pipes) == 0 or pipes[-1].x < Constants.SCREEN_WIDTH.value - 150:
+            if len(pipes) == 0 or pipes[-1].x_coordinate < Constants.SCREEN_WIDTH.value - 150:
                 pipes.append(
-                    Pipe(x=Constants.SCREEN_WIDTH.value, screen=self.screen))
+                    Pipe(x_coordinate=Constants.SCREEN_WIDTH.value, screen=self.screen))
             for pipe in pipes:
                 pipe.move()
                 pipe.draw()
@@ -92,14 +92,14 @@ class FlappyBirdGame:
 
                 if bird.alive:
 
-                    if bird.y > Constants.SCREEN_HEIGHT.value or bird.y < 0:
+                    if bird.y_coordinate > Constants.SCREEN_HEIGHT.value or bird.y_coordinate < 0:
                         bird.alive = False
                     else:
                         for pipe in pipes:
-                            if (bird.x + Constants.BIRD_RADIUS.value > pipe.x and bird.x -
-                                    Constants.BIRD_RADIUS.value < pipe.x + Constants.PIPE_WIDTH.value):
-                                if (bird.y - Constants.BIRD_RADIUS.value < pipe.top_height or
-                                        bird.y + Constants.BIRD_RADIUS.value > pipe.bottom_start):
+                            if (bird.x_coordinate + Constants.BIRD_RADIUS.value > pipe.x_coordinate and bird.x_coordinate -
+                                    Constants.BIRD_RADIUS.value < pipe.x_coordinate + Constants.PIPE_WIDTH.value):
+                                if (bird.y_coordinate - Constants.BIRD_RADIUS.value < pipe.top_height or
+                                        bird.y_coordinate + Constants.BIRD_RADIUS.value > pipe.bottom_start):
                                     bird.alive = False
 
                 if bird.alive and self.train_mode:

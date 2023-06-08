@@ -24,6 +24,7 @@ def tournament_selection(population: list[AIBird]):
 
 def perform_crossover(parent1: AIBird, parent2: AIBird):
     """One-point crossover between two parents."""
+
     if random.random() < Constants.CROSSOVER_RATE.value:
         # Create empty child network
         child_network = NeuralNetwork()
@@ -59,12 +60,13 @@ def perform_crossover(parent1: AIBird, parent2: AIBird):
         # Create and return the child with the new network
         child = AIBird(screen=parent1.screen)
         child.neural_network = child_network
-        return child
+        offspring = child
     else:
         if random.random() < 0.5:
-            return parent1
+            offspring = parent1
         else:
-            return parent2
+            offspring = parent2
+    return offspring
 
 
 def perform_mutation(bird: AIBird):

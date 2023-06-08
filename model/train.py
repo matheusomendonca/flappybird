@@ -84,10 +84,12 @@ class TrainBird:
 
             # Create new generation if all birds die
             generation_fitness = [bird.fitness for bird in current_birds]
+            avg_fitness = np.mean(generation_fitness)
+            std_fitness = np.std(generation_fitness)
             print(f"Generation: {generation},"
                   f"Max Fitness: {self.best_fitness:.3f},",
-                  f"Current avg Fitness: {np.mean(generation_fitness):.3f},",
-                  f"Current relative std: {np.std(generation_fitness)/np.mean(generation_fitness):.3f}")
+                  f"Current avg Fitness: {avg_fitness:.3f},",
+                  f"Current relative std: {std_fitness/avg_fitness:.3f}")
 
             # Increment generation count
             generation += 1
